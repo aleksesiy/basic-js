@@ -20,15 +20,67 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor(isDirect = true) {
+    this.isDirect = isDirect;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  encrypt(message, keyWord) {
+    if (!message || !keyWord) throw new Error("Invalid input!");
+
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    message = message.toUpperCase();
+    keyWord = keyWord.toUpperCase();
+
+    let result = '';
+    let keyIndex = 0;
+
+    for (let i = 0; i < message.length; i++) {
+      const messageChar = message[i];
+      if (alphabet.includes(messageChar)) {
+        const messageIndex = alphabet.indexOf(messageChar);
+        const keyChar = keyWord[keyIndex % keyWord.length];
+        const keyIndexValue = alphabet.indexOf(keyChar);
+
+        const newChar = alphabet[(messageIndex + keyIndexValue) % 26];
+        result += newChar;
+        keyIndex++; 
+      } else {
+        result += messageChar;
+      }
+    }
+
+    return this.isDirect ? result : result.split('').reverse().join('');
+  }
+
+  decrypt(message, keyWord) {
+    if (!message || !keyWord) throw new Error("Invalid input!");
+
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    message = message.toUpperCase();
+    keyWord = keyWord.toUpperCase();
+
+    let result = '';
+    let keyIndex = 0;
+
+    for (let i = 0; i < message.length; i++) {
+      const messageChar = message[i];
+      if (alphabet.includes(messageChar)) {
+        const messageIndex = alphabet.indexOf(messageChar);
+        const keyChar = keyWord[keyIndex % keyWord.length];
+        const keyIndexValue = alphabet.indexOf(keyChar);
+
+        const newChar = alphabet[(messageIndex - keyIndexValue + 26) % 26];
+        result += newChar;
+        keyIndex++;
+      } else {
+        result += messageChar;
+      }
+    }
+
+    return this.isDirect ? result : result.split('').reverse().join('');
   }
 }
+
 
 module.exports = {
   VigenereCipheringMachine

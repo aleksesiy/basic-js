@@ -23,26 +23,29 @@ function repeater(str, options) {
   const sep = options.separator;
 
 
+
   let modifiedStr = str;
-  if(addition !== undefined){
+  if (addition !== undefined) {
     for (let i = 0; i < addReps; i++) {
       modifiedStr += addition;
-      if (i < addReps - 1 && addSep !== undefined ) {
+      if (i < addReps - 1 && addSep !== undefined) {
         modifiedStr += addSep;
       }
     }
   }
 
-
-  let result = '';
-  for (let n = 0; n < reps; n++) {
-    result += modifiedStr;
-    if (n < reps - 1 && sep !== undefined) {
-      result += sep;
+  if (reps !== 1) {
+    let result = '';
+    for (let n = 0; n < reps; n++) {
+      result += modifiedStr;
+      if (n < reps - 1 && sep !== undefined) {
+        result += sep;
+      }
     }
-  }
 
-  return result;
+    return result;
+  }
+  return modifiedStr;
 }
 module.exports = {
   repeater
