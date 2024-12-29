@@ -5,13 +5,11 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 const chainMaker = {
-  getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  getLength(chain) {
+    return chain.split('-').length;
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value) {
+    return value;
   },
   removeLink(/* position */) {
     throw new NotImplementedError('Not implemented');
